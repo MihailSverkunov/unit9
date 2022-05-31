@@ -1,24 +1,24 @@
 package pro.sisit.unit9;
 
-import org.hibernate.ObjectNotFoundException;
+import static org.junit.Assert.assertEquals;
+
+import java.math.BigDecimal;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import pro.sisit.unit9.data.AuthorOfBookRepository;
 import pro.sisit.unit9.data.AuthorRepository;
 import pro.sisit.unit9.data.BookRepository;
 import pro.sisit.unit9.data.CustomerRepository;
-import pro.sisit.unit9.entity.*;
+import pro.sisit.unit9.entity.Author;
+import pro.sisit.unit9.entity.AuthorOfBook;
+import pro.sisit.unit9.entity.Book;
+import pro.sisit.unit9.entity.Customer;
 import pro.sisit.unit9.service.PurchaseBookService;
-
-import java.math.BigDecimal;
-import java.util.Optional;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -128,6 +128,7 @@ public class SpringDataApplicationTests {
 
 
 	@Test
+	@Transactional
 	public void purchaseBook(){
 
 		assertEquals(7, purchaseBookService.findAll().size());
@@ -135,49 +136,56 @@ public class SpringDataApplicationTests {
 	}
 
 	@Test
-	public void totalCostOfBooksByTitle(){
+	@Transactional
+	public void totalCostOfBooksByTitle() {
 
-		assertEquals(BigDecimal.valueOf(3000, 2), purchaseBookService.totalCostOfBooksByBookTitle("Приключения Гекльберри Финна"));
-		assertEquals(BigDecimal.valueOf(90000, 2), purchaseBookService.totalCostOfBooksByBookTitle("Михаил Строгов"));
-		assertEquals(BigDecimal.valueOf(300000, 2), purchaseBookService.totalCostOfBooksByBookTitle("Приключения Тома Сойера"));
+		assertEquals(
+			BigDecimal.valueOf(30),
+			purchaseBookService.totalCostOfBooksByBookTitle("Приключения Гекльберри Финна")
+		);
+		assertEquals(BigDecimal.valueOf(900), purchaseBookService.totalCostOfBooksByBookTitle("Михаил Строгов"));
+		assertEquals(
+			BigDecimal.valueOf(3000),
+			purchaseBookService.totalCostOfBooksByBookTitle("Приключения Тома Сойера")
+		);
 
 	}
 
 	@Test
-	public void totalCostOfBooksByCustomerName(){
+	@Transactional
+	public void totalCostOfBooksByCustomerName() {
 
-		assertEquals(BigDecimal.valueOf(21000, 2), purchaseBookService.totalCostOfBooksByCustomerName("Иванов"));
-		assertEquals(BigDecimal.valueOf(130000, 2), purchaseBookService.totalCostOfBooksByCustomerName("Петров"));
-		assertEquals(BigDecimal.valueOf(242000, 2), purchaseBookService.totalCostOfBooksByCustomerName("Сидоров"));
+		assertEquals(BigDecimal.valueOf(210), purchaseBookService.totalCostOfBooksByCustomerName("Иванов"));
+		assertEquals(BigDecimal.valueOf(1300), purchaseBookService.totalCostOfBooksByCustomerName("Петров"));
+		assertEquals(BigDecimal.valueOf(2420), purchaseBookService.totalCostOfBooksByCustomerName("Сидоров"));
 
 	}
 
-
-	@Test
-	public void testFindSame() {
-//		Book book = new Book();
-//		book.setYear(1876);
-//
-//		assertEquals(2, bookRepository.findAll(Example.of(book)).size());
-	}
-
-	@Test
-	public void testFindInRange() {
-//		assertEquals(3, bookRepository.findAll(
-//				BookSpecifications.byYearRange(1800, 1900)).size());
-//		assertEquals(0, bookRepository.findAll(
-//				BookSpecifications.byYearRange(2000, 2010)).size());
-	}
-
-	@Test
-	public void testFindByAuthorLastname() {
-//		assertTrue(bookRepository.findByAuthor("Верн")
-//				.stream().allMatch(book -> book.getTitle().equals("Михаил Строгов")));
-	}
-
-	@Test
-	public void testComplexQueryMethod() {
-//		assertEquals(4, bookRepository.complexQueryMethod().size());
-	}
+	//	@Test
+	//	public void testFindSame() {
+	////		Book book = new Book();
+	////		book.setYear(1876);
+	////
+	////		assertEquals(2, bookRepository.findAll(Example.of(book)).size());
+	//	}
+	//
+	//	@Test
+	//	public void testFindInRange() {
+	////		assertEquals(3, bookRepository.findAll(
+	////				BookSpecifications.byYearRange(1800, 1900)).size());
+	////		assertEquals(0, bookRepository.findAll(
+	////				BookSpecifications.byYearRange(2000, 2010)).size());
+	//	}
+	//
+	//	@Test
+	//	public void testFindByAuthorLastname() {
+	////		assertTrue(bookRepository.findByAuthor("Верн")
+	////				.stream().allMatch(book -> book.getTitle().equals("Михаил Строгов")));
+	//	}
+	//
+	//	@Test
+	//	public void testComplexQueryMethod() {
+	////		assertEquals(4, bookRepository.complexQueryMethod().size());
+	//	}
 
 }

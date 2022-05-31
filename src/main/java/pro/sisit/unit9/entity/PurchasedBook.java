@@ -1,9 +1,15 @@
 package pro.sisit.unit9.entity;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.math.BigDecimal;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import lombok.Data;
 
 @Data
 @Entity
