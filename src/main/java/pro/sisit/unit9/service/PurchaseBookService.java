@@ -63,17 +63,14 @@ public class PurchaseBookService {
 
     @Transactional
     public BigDecimal totalCostOfBooksByCustomerName(String customerName) {
-        List<PurchasedBook> all1 = findAll();
-        List<PurchasedBook> all = purchasedBookRepository.findAll(PurchasedBookSpecifications.customerNameEquals(
-            customerName));
-        return all
-            .stream()
-            .map(PurchasedBook::getCost)
-            .reduce(BigDecimal::add)
-            .orElseThrow(() -> new RuntimeException(String.format(
-                "Не найдена информация по покупателю с именем '%s'.",
-                customerName
-            )));
+        return purchasedBookRepository.findAll(PurchasedBookSpecifications.customerNameEquals(customerName))
+                                      .stream()
+                                      .map(PurchasedBook::getCost)
+                                      .reduce(BigDecimal::add)
+                                      .orElseThrow(() -> new RuntimeException(String.format(
+                                          "Не найдена информация по покупателю с именем '%s'.",
+                                          customerName
+                                      )));
 
     }
 

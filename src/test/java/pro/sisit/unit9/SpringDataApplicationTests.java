@@ -123,7 +123,6 @@ public class SpringDataApplicationTests {
 		purchaseBookService.purchaseBook("Михаил Строгов", "Сидоров", BigDecimal.valueOf(400));
 		purchaseBookService.purchaseBook("Приключения Тома Сойера", "Сидоров", BigDecimal.valueOf(2000));
 
-
 	}
 
 
